@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Submit audio</title>
+</head>
+<body>
+
+<h1>Submit a recording</h1>
+<p><a href="/submissions">View all submissions</a></p>
+
+{% if error %}
+  <p><strong>Error:</strong> {{ error }}</p>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+  <p>
+    <label>Name<br>
+      <input type="text" name="name" required>
+    </label>
+  </p>
+  <p>
+    <label>Phone number<br>
+      <input type="text" name="phone" required>
+    </label>
+  </p>
+
+  <fieldset>
+    <legend>Record in the browser</legend>
+    <button type="button" id="record">Start recording</button>
+    <button type="button" id="stop" disabled>Stop</button>
+    <span id="status"></span>
+    <p><audio id="preview" controls hidden></audio></p>
+  </fieldset>
+
+  <p>
+    <label>...or upload a file<br>
+      <input type="file" name="audio" id="audio" accept="audio/*" required>
+    </label>
+  </p>
+
+  <p><button type="submit">Submit</button></p>
+</form>
+
+<script>
+// Recording writes the finished Blob into the same file input the upload path
+// uses, so the server only ever sees one kind of request.
+let recorder = null;
+let chunks = [];
+
+const recordButton = document.getElementById("record");
+const stopButton = document.getElementById("stop");
+const statusText = document.getElementById("status");
+const preview = document.getElementById("preview");
+const fileInput = document.getElementById("audio");
+
+if (!navigator.mediaDevices || !window.MediaRecorder) {
+  statusText.textContent = "Browser recording not supported here - use the file upload.";
+  recordButton.disabled = true;
+}
+
+recordButton.onclick = async function () {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    chunks = [];
+    recorder = new MediaRecorder(stream);
+    recorder.ondataavailable = e => chunks.push(e.data);
+    recorder.onstop = function () {
+      const type = recorder.mimeType || "audio/webm";
+      const blob = new Blob(chunks, { type: type });
+      preview.src = URL.createObjectURL(blob);
+      preview.hidden = false;
+
+      // Put the blob into the file input so the plain form submit carries it.
+      const extension = type.indexOf("ogg") > -1 ? "ogg" : "webm";
+      const file = new File([blob], "recording." + extension, { type: type });
+      const transfer = new DataTransfer();
+      transfer.items.add(file);
+      fileInput.files = transfer.files;
+
+      stream.getTracks().forEach(t => t.stop());
+      statusText.textContent = "Recorded " + Math.round(blob.size / 1024) + " KB.";
+    };
+    recorder.start();
+    recordButton.disabled = true;
+    stopButton.disabled = false;
+    statusText.textContent = "Recording...";
+  } catch (error) {
+    statusText.textContent = "Microphone unavailable: " + error.message;
+  }
+};
+
+stopButton.onclick = function () {
+  if (recorder && recorder.state !== "inactive") {
+    recorder.stop();
+  }
+  recordButton.disabled = false;
+  stopButton.disabled = true;
+};
+</script>
+
+</body>
+</html>
