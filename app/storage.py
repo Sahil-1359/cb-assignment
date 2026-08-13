@@ -41,11 +41,14 @@ def upload(local_path, object_path, content_type):
             response = requests.post(
                 endpoint,
                 data=handle,
+                # No x-upsert header: Supabase treats an upsert as needing an
+                # UPDATE policy as well as INSERT, and the bucket only grants
+                # INSERT to anon. Object names are uuid4 anyway, so there is
+                # nothing to overwrite.
                 headers={
                     "Authorization": f"Bearer {key}",
                     "apikey": key,
                     "Content-Type": content_type or "application/octet-stream",
-                    "x-upsert": "true",
                 },
                 timeout=TIMEOUT_SECONDS,
             )
