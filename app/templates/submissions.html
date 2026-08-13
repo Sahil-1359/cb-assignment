@@ -1,66 +1,148 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Submissions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All submissions — ConsultBae</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
 
-<h1>Submissions ({{ rows|length }})</h1>
-<p><a href="/">Submit another</a></p>
+<header class="site-header">
+  <a class="wordmark" href="/">
+    <span class="dot"></span>
+    <span><span class="mark-strong">CONSULT</span><span class="mark-soft">BAE</span></span>
+  </a>
+  <nav class="site-nav">
+    <a href="/">Contribute</a>
+    <a href="/submissions" aria-current="page">Submissions</a>
+  </nav>
+</header>
 
-{% if warning == 'storage' %}
-  <p><strong>Note:</strong> the last submission was saved, but uploading the
-  audio to storage failed, so it has no player. The extracted values are still
-  correct - they are measured before upload.</p>
-{% endif %}
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Quality Scored</span><span>Contributor Matched</span>
+    <span>SNR · Loudness · Bitrate</span><span>Dataset Ready</span>
+    <span>Quality Scored</span><span>Contributor Matched</span>
+    <span>SNR · Loudness · Bitrate</span><span>Dataset Ready</span>
+    <span>Quality Scored</span><span>Contributor Matched</span>
+    <span>SNR · Loudness · Bitrate</span><span>Dataset Ready</span>
+    <span>Quality Scored</span><span>Contributor Matched</span>
+    <span>SNR · Loudness · Bitrate</span><span>Dataset Ready</span>
+  </div>
+</div>
 
-<table border="1" cellpadding="4" cellspacing="0">
-  <tr>
-    <th>ID</th>
-    <th>Submitted name</th>
-    <th>Phone</th>
-    <th>Matched person</th>
-    <th>Play</th>
-    <th>Duration (s)</th>
-    <th>Sample rate (kHz)</th>
-    <th>Bitrate (kbps)</th>
-    <th>Loudness (dBFS)</th>
-    <th>SNR (dB)</th>
-    <th>Submitted at</th>
-  </tr>
-  {% for row in rows %}
-  <tr>
-    <td>{{ row.id }}</td>
-    <td>{{ row.submitted_name }}</td>
-    <td>{{ row.submitted_phone }}</td>
-    <td>
-      {% if row.person_id %}
-        {{ row.matched_name }} (#{{ row.person_id }})
-      {% else %}
-        no match
+<div class="page">
+  <section class="section">
+    <div class="glow-layer"></div>
+    <canvas id="sphere-canvas" aria-hidden="true"></canvas>
+
+    <div class="section-inner">
+
+      <p class="eyebrow">Collection Log</p>
+
+      <div class="list-head">
+        <h1 class="headline">
+          All<br><span class="gradient">submissions</span>
+        </h1>
+        <span class="count-pill"><strong>{{ rows|length }}</strong> Total Records</span>
+      </div>
+
+      {% if warning == 'storage' %}
+        <div class="notice notice-warning">
+          <strong>Note:</strong> the last submission was saved, but uploading the
+          audio to storage failed, so it has no player. The extracted values are
+          still correct — they are measured before upload.
+        </div>
       {% endif %}
-    </td>
-    <td>
-      {% if row.audio_url %}
-        <audio controls preload="none" src="{{ row.audio_url }}"></audio>
-      {% else %}
-        upload failed
-      {% endif %}
-    </td>
-    <td>{{ row.duration_sec if row.duration_sec is not none else '-' }}</td>
-    <td>
-      {% if row.sample_rate_hz %}{{ (row.sample_rate_hz / 1000)|round(1) }}{% else %}-{% endif %}
-    </td>
-    <td>{{ row.bitrate_kbps if row.bitrate_kbps is not none else '-' }}</td>
-    <td>{{ row.loudness_db if row.loudness_db is not none else '-' }}</td>
-    <td>{{ row.snr_db if row.snr_db is not none else '-' }}</td>
-    <td>{{ row.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-  </tr>
-  {% else %}
-  <tr><td colspan="11">Nothing submitted yet.</td></tr>
-  {% endfor %}
-</table>
+
+      <div class="table-wrap">
+        <table class="subs">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Matched contributor</th>
+              <th>Audio</th>
+              <th class="metric metric-start">Dur (s)</th>
+              <th class="metric">Rate (kHz)</th>
+              <th class="metric">Bitrate (kbps)</th>
+              <th class="metric">Loudness</th>
+              <th class="metric">SNR</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for row in rows %}
+            <tr>
+              <td data-label="ID" class="cell-id">#{{ '%04d' % row.id }}</td>
+              <td data-label="Name" class="cell-name">{{ row.submitted_name }}</td>
+              <td data-label="Phone" class="cell-phone">{{ row.submitted_phone }}</td>
+              <td data-label="Matched contributor">
+                {% if row.person_id %}
+                  <span class="match-pill">
+                    <span class="dot"></span>
+                    {{ row.matched_name }}
+                    <span class="cid">C-{{ '%04d' % row.person_id }}</span>
+                  </span>
+                {% else %}
+                  <span class="no-match">No match on file</span>
+                {% endif %}
+              </td>
+              <td data-label="Audio">
+                {% if row.audio_url %}
+                  <audio controls preload="none" src="{{ row.audio_url }}"></audio>
+                {% else %}
+                  <span class="upload-failed">upload failed</span>
+                {% endif %}
+              </td>
+              <td data-label="Dur (s)" class="metric metric-start">
+                {{ row.duration_sec if row.duration_sec is not none else '-' }}
+              </td>
+              <td data-label="Rate (kHz)" class="metric">
+                {% if row.sample_rate_hz %}{{ (row.sample_rate_hz / 1000)|round(1) }}{% else %}-{% endif %}
+              </td>
+              <td data-label="Bitrate (kbps)" class="metric">
+                {{ row.bitrate_kbps if row.bitrate_kbps is not none else '-' }}
+              </td>
+              <td data-label="Loudness" class="metric">
+                {{ row.loudness_db if row.loudness_db is not none else '-' }}
+              </td>
+              <td data-label="SNR" class="metric">
+                {% if row.snr_db is not none %}
+                  <span class="snr-cell">
+                    <span class="snr-dot
+                      {%- if row.snr_db < 15 %} snr-low
+                      {%- elif row.snr_db <= 40 %} snr-mid
+                      {%- else %} snr-high{% endif %}"></span>
+                    {{ row.snr_db }}
+                  </span>
+                {% else %}-{% endif %}
+              </td>
+              <td data-label="Submitted" class="cell-phone">
+                {{ row.created_at.strftime('%Y-%m-%d %H:%M') }}
+              </td>
+            </tr>
+          {% else %}
+            <tr><td class="empty-row" colspan="11">Nothing submitted yet.</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <a class="back-link" href="/">&larr; Back to contribute</a>
+
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <span>ConsultBae · AI Data Collection</span>
+    <span>{{ rows|length }} Records · Quality Scored</span>
+  </footer>
+</div>
+
+<script src="{{ url_for('static', filename='js/sphere.js') }}"></script>
 
 </body>
 </html>

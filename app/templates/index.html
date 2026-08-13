@@ -1,61 +1,162 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Submit audio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lend your voice — ConsultBae</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
 
-<h1>Submit a recording</h1>
-<p><a href="/submissions">View all submissions</a></p>
+<header class="site-header">
+  <a class="wordmark" href="/">
+    <span class="dot"></span>
+    <span><span class="mark-strong">CONSULT</span><span class="mark-soft">BAE</span></span>
+  </a>
+  <nav class="site-nav">
+    <a href="/" aria-current="page">Contribute</a>
+    <a href="/submissions">Submissions</a>
+  </nav>
+</header>
 
-{% if error %}
-  <p><strong>Error:</strong> {{ error }}</p>
-{% endif %}
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>100+ Languages</span><span>Crowdsourced Contributors</span>
+    <span>AI Training Data</span><span>Speech &amp; Audio</span>
+    <span>100+ Languages</span><span>Crowdsourced Contributors</span>
+    <span>AI Training Data</span><span>Speech &amp; Audio</span>
+    <span>100+ Languages</span><span>Crowdsourced Contributors</span>
+    <span>AI Training Data</span><span>Speech &amp; Audio</span>
+    <span>100+ Languages</span><span>Crowdsourced Contributors</span>
+    <span>AI Training Data</span><span>Speech &amp; Audio</span>
+  </div>
+</div>
 
-<form method="post" enctype="multipart/form-data">
-  <p>
-    <label>Name<br>
-      <input type="text" name="name" required>
-    </label>
-  </p>
-  <p>
-    <label>Phone number<br>
-      <input type="text" name="phone" required>
-    </label>
-  </p>
+<div class="page">
+  <section class="section">
+    <div class="glow-layer"></div>
+    <canvas id="sphere-canvas" aria-hidden="true"></canvas>
 
-  <fieldset>
-    <legend>Record in the browser</legend>
-    <button type="button" id="record">Start recording</button>
-    <button type="button" id="stop" disabled>Stop</button>
-    <span id="status"></span>
-    <p><audio id="preview" controls hidden></audio></p>
-  </fieldset>
+    <div class="section-inner">
+      <div class="hero-grid">
+        <div class="hero-content">
 
-  <p>
-    <label>...or upload a file<br>
-      <input type="file" name="audio" id="audio" accept="audio/*" required>
-    </label>
-  </p>
+          <p class="eyebrow">Voice Collection · Gig Project</p>
 
-  <p><button type="submit">Submit</button></p>
-</form>
+          <h1 class="headline">
+            Lend your<br>
+            <span class="gradient">voice</span><br>
+            to the machine
+          </h1>
 
+          <p class="lede">
+            Record a short clip in your language, or upload one you already have.
+            Every submission is quality-scored and folded into datasets that teach
+            machines to understand real, human speech.
+          </p>
+
+          {% if error %}
+            <div class="notice notice-error"><strong>Error:</strong> {{ error }}</div>
+          {% endif %}
+
+          <form class="card form-card" id="audio-form" method="post" enctype="multipart/form-data">
+
+            <div class="field">
+              <label class="field-label" for="name">Full name</label>
+              <input class="field-input" type="text" id="name" name="name"
+                     placeholder="e.g. Ananya Sharma" required>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="phone">Phone number</label>
+              <input class="field-input" type="text" id="phone" name="phone"
+                     placeholder="+91 90000-00254" required>
+            </div>
+
+            <div class="field">
+              <span class="field-label">Audio sample</span>
+
+              <div class="toggle" role="tablist">
+                <button type="button" id="tab-record" role="tab" aria-selected="true">Record</button>
+                <button type="button" id="tab-upload" role="tab" aria-selected="false">Upload file</button>
+              </div>
+
+              <div class="panel is-active" id="panel-record">
+                <div class="record-panel">
+                  <button type="button" class="record-button" id="record-btn"
+                          aria-label="Start recording"></button>
+                  <div class="record-meta">
+                    <div class="record-caption">Tap to record</div>
+                    <div class="record-timer" id="record-timer">00:00</div>
+                    <div class="record-hint">Speak clearly · quiet room · 5–30 s</div>
+                  </div>
+                  <button type="button" class="stop-button" id="stop-btn" disabled>Stop</button>
+                </div>
+                <div class="record-status" id="record-status"></div>
+                <audio id="preview" controls hidden></audio>
+              </div>
+
+              <div class="panel" id="panel-upload">
+                <input class="field-input" type="file" id="audio-file" name="audio" accept="audio/*">
+              </div>
+            </div>
+
+            <button type="submit" class="submit-button">Submit recording</button>
+          </form>
+
+        </div>
+        <div aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <span>ConsultBae · AI Data Collection</span>
+    <span>Speech &amp; Audio · Quality Scored</span>
+  </footer>
+</div>
+
+<script src="{{ url_for('static', filename='js/sphere.js') }}"></script>
 <script>
 // Recording writes the finished Blob into the same file input the upload path
 // uses, so the server only ever sees one kind of request.
 let recorder = null;
 let chunks = [];
+let timerInterval = null;
+let startedAt = 0;
 
-const recordButton = document.getElementById("record");
-const stopButton = document.getElementById("stop");
-const statusText = document.getElementById("status");
+const recordButton = document.getElementById("record-btn");
+const stopButton = document.getElementById("stop-btn");
+const statusText = document.getElementById("record-status");
+const timerText = document.getElementById("record-timer");
 const preview = document.getElementById("preview");
-const fileInput = document.getElementById("audio");
+const fileInput = document.getElementById("audio-file");
+const form = document.getElementById("audio-form");
+
+const tabRecord = document.getElementById("tab-record");
+const tabUpload = document.getElementById("tab-upload");
+const panelRecord = document.getElementById("panel-record");
+const panelUpload = document.getElementById("panel-upload");
+
+function selectTab(which) {
+  const recording = which === "record";
+  tabRecord.setAttribute("aria-selected", recording ? "true" : "false");
+  tabUpload.setAttribute("aria-selected", recording ? "false" : "true");
+  panelRecord.classList.toggle("is-active", recording);
+  panelUpload.classList.toggle("is-active", !recording);
+}
+
+tabRecord.onclick = () => selectTab("record");
+tabUpload.onclick = () => selectTab("upload");
+
+function formatTime(seconds) {
+  const m = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const s = String(seconds % 60).padStart(2, "0");
+  return m + ":" + s;
+}
 
 if (!navigator.mediaDevices || !window.MediaRecorder) {
-  statusText.textContent = "Browser recording not supported here - use the file upload.";
+  statusText.textContent = "Browser recording not supported here - use Upload file.";
   recordButton.disabled = true;
 }
 
@@ -82,7 +183,14 @@ recordButton.onclick = async function () {
       statusText.textContent = "Recorded " + Math.round(blob.size / 1024) + " KB.";
     };
     recorder.start();
+    startedAt = Date.now();
+    timerText.textContent = "00:00";
+    timerInterval = setInterval(function () {
+      timerText.textContent = formatTime(Math.floor((Date.now() - startedAt) / 1000));
+    }, 250);
+
     recordButton.disabled = true;
+    recordButton.classList.add("is-recording");
     stopButton.disabled = false;
     statusText.textContent = "Recording...";
   } catch (error) {
@@ -94,9 +202,23 @@ stopButton.onclick = function () {
   if (recorder && recorder.state !== "inactive") {
     recorder.stop();
   }
+  clearInterval(timerInterval);
   recordButton.disabled = false;
+  recordButton.classList.remove("is-recording");
   stopButton.disabled = true;
 };
+
+// The file input cannot be `required`: it is hidden while the Record tab is
+// active, and browsers refuse to submit a form blocked by a hidden required
+// field. The server rejects an empty submission regardless; this is just a
+// friendlier message before the round trip.
+form.addEventListener("submit", function (event) {
+  if (!fileInput.files || fileInput.files.length === 0) {
+    event.preventDefault();
+    selectTab("record");
+    statusText.textContent = "Record a clip or choose a file before submitting.";
+  }
+});
 </script>
 
 </body>
