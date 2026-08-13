@@ -1,0 +1,17 @@
+# Render Blueprint. In the Render dashboard: New -> Blueprint -> pick this repo.
+# The three secrets are marked sync:false, so Render prompts for them instead of
+# them ever living in the repo.
+services:
+  - type: web
+    name: cb-audio-app
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
