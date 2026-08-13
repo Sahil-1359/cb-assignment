@@ -11,3 +11,6 @@ env/
 node_modules/
 .idea/
 .vscode/
+
+# Local scratch recordings used while testing the audio app
+test audio/
