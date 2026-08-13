@@ -102,6 +102,7 @@ CREATE TABLE people (
     verified           BOOLEAN,
     projects_completed INT,
     skills             TEXT,
+    skill_category     TEXT,      -- written by the n8n LLM flow, not by this pipeline
     in_naukri          BOOLEAN NOT NULL DEFAULT FALSE,
     in_gigs            BOOLEAN NOT NULL DEFAULT FALSE,
     in_nexus           BOOLEAN NOT NULL DEFAULT FALSE,
