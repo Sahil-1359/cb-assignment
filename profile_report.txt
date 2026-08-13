@@ -1,0 +1,408 @@
+CSV DATA PROFILE REPORT
+Generated for cutoff date 2026-08-12
+
+==============================================================================
+FILE: source1_naukri_applicants.csv
+==============================================================================
+Rows read by pandas: 42
+Column names: ['Full Name', 'Email', 'Phone', 'City', 'Experience (Years)', 'Current CTC', 'Applied Date', 'Skills']
+
+Per-column value profile:
+  Full Name: empty/whitespace-only=0; distinct=41
+    top 10: 'Nikhil Chopra' (2), 'Tanvi Gupta' (1), 'Manish Reddy' (1), 'Priya Singh' (1), 'Vikram Saxena' (1), 'Amit Agarwal' (1), 'Sahil Malhotra' (1), 'Shreya Gupta' (1), 'Isha Chopra' (1), 'Priya Nair' (1)
+  Email: empty/whitespace-only=0; distinct=41
+    top 10: 'rohit.verma13@mailtest.example.org' (2), 'tanvi.gupta31@example.com' (1), 'manish.reddy73@example.com' (1), 'priya.singh61@mailtest.example.org' (1), 'vikram.saxena60@example.com' (1), 'amit.agarwal3@mailtest.example.org' (1), 'sahil.malhotra1@example.in' (1), 'shreya.gupta85@example.com' (1), 'isha.chopra95@mailtest.example.org' (1), 'priya.nair70@example.com' (1)
+  Phone: empty/whitespace-only=0; distinct=40
+    top 10: '9000000294' (2), '09000000103' (2), '+919000000254' (1), '9000000237' (1), '09000000287' (1), '9000000113' (1), '+919000000288' (1), '+919000000143' (1), '9000000227' (1), '09000000138' (1)
+  City: empty/whitespace-only=0; distinct=16
+    top 10: 'NOIDA' (6), 'Delhi' (4), 'Bengaluru' (3), 'GURGAON' (3), 'pune' (3), 'PUNE' (3), 'new delhi' (3), 'Noida ' (3), 'Noida' (2), 'gurugram ' (2)
+  Experience (Years): empty/whitespace-only=0; distinct=28
+    top 10: '4.2' (3), '1.7' (3), '5.1' (3), '2.4' (3), '5.0' (3), '3.5' (2), '3.1' (2), '2.7' (2), '0.8' (2), '3.0' (1)
+  Current CTC: empty/whitespace-only=0; distinct=38
+    top 10: '6.1' (3), '7.6' (2), '7.8' (2), '417964' (1), '332456' (1), '775670' (1), '654699' (1), '4.2' (1), '806661' (1), '8.3' (1)
+  Applied Date: empty/whitespace-only=0; distinct=37
+    top 10: '07/03/2026' (3), '19-07-2026' (2), '08/13/2026' (2), '27 Jul 2026' (2), '24-07-2026' (1), '2026-08-08' (1), '01-08-2026' (1), '7 Jul 2026' (1), '07/13/2026' (1), '19 Jul 2026' (1)
+  Skills: empty/whitespace-only=0; distinct=40
+    top 10: 'Python, React, MongoDB' (2), 'Pandas, SQL, n8n' (2), 'n8n, LangChain, REST APIs, MongoDB, SQL' (1), 'Docker, Zapier, JavaScript' (1), 'React, Zapier, n8n, MySQL, Python, SQL' (1), 'Selenium, Web Scraping, React, Docker, SQL, FastAPI' (1), 'SQL, Python, JavaScript, Docker' (1), 'FastAPI, Docker, MySQL, Zapier, Pandas, REST APIs' (1), 'Zapier, Web Scraping, Docker, n8n, Python' (1), 'React, JavaScript, MySQL' (1)
+
+CHECK: malformed field counts and likely wrong-column values
+  None found.
+
+CHECK: repeated header rows
+  None found.
+
+CHECK: completely empty rows
+  None found.
+
+CHECK: phone shapes in Phone
+  leading +91; without hyphens; digit length 12: 12; example '+919000000254'
+  no recognized prefix; without hyphens; digit length 10: 12; example '9000000237'
+  leading 0; without hyphens; digit length 11: 18; example '09000000287'
+
+CHECK: numeric range and units in Experience (Years)
+  min=0.8; max=5.6; numeric values=42/42
+
+CHECK: numeric range and units in Current CTC
+  min=2.4; max=1.19542e+06; numeric values=42/42
+  FLAG: values span under 100 and over 100000, suggesting mixed units.
+
+CHECK: date formats in Applied Date
+  DD/MM/YYYY or MM/DD/YYYY: 23; example '24-07-2026'
+  YYYY-MM-DD: 9; example '2026-08-08'
+  D Mon YYYY: 10; example '7 Jul 2026'
+  Ambiguous DD/MM vs MM/DD: '01-08-2026', '07/03/2026', '03-07-2026', '07/03/2026', '08/11/2026', '07/03/2026', '02-06-2026', '07/12/2026'
+  Later than 2026-08-12: '21-08-2026', '22-08-2026', '08/19/2026', '08/13/2026', '08/16/2026', '08/13/2026', '2026-08-19', '08/11/2026', '08/21/2026', '07/12/2026'
+
+CHECK: normalized text variants in Full Name
+  'amit agarwal': 'Amit Agarwal' (1)
+  'amit reddy': 'Amit Reddy' (1)
+  'arjun bhatia': 'Arjun Bhatia' (1)
+  'arjun mehta': 'Arjun Mehta' (1)
+  'arjun mishra': 'Arjun Mishra' (1)
+  'deepak mehta': 'Deepak Mehta' (1)
+  'deepak nair': 'Deepak Nair' (1)
+  'deepak singh': 'Deepak Singh' (1)
+  'gaurav mehta': 'Gaurav Mehta' (1)
+  'isha chopra': 'Isha Chopra' (1)
+  'isha kapoor': 'Isha Kapoor' (1)
+  'isha sharma': 'Isha Sharma' (1)
+  'karan bhatia': 'Karan Bhatia' (1)
+  'kavya mehta': 'Kavya Mehta' (1)
+  'manish reddy': 'Manish Reddy' (1)
+  'meera bhatia': 'Meera Bhatia' (1)
+  'neha bhatia': 'Neha Bhatia' (1)
+  'nikhil chopra': 'Nikhil Chopra' (2)
+  'nikhil malhotra': 'Nikhil Malhotra' (1)
+  'nikhil mehta': 'Nikhil Mehta' (1)
+  'pooja gupta': 'Pooja Gupta' (1)
+  'priya nair': 'Priya Nair' (1)
+  'priya saxena': 'Priya Saxena' (1)
+  'priya singh': 'Priya Singh' (1)
+  'r. verma': 'R. Verma' (1)
+  'rahul chopra': 'Rahul Chopra' (1)
+  'rahul jain': 'Rahul Jain' (1)
+  'rahul malhotra': 'Rahul Malhotra' (1)
+  'ritu sharma': 'Ritu Sharma' (1)
+  'rohit mishra': 'Rohit Mishra' (1)
+  'rohit nair': 'Rohit Nair' (1)
+  'rohit verma': 'Rohit Verma' (1)
+  'sahil malhotra': 'Sahil Malhotra' (1)
+  'shreya gupta': 'Shreya Gupta' (1)
+  'sneha chopra': 'Sneha Chopra' (1)
+  'sneha mishra': 'Sneha Mishra' (1)
+  'tanvi agarwal': 'Tanvi Agarwal' (1)
+  'tanvi gupta': 'Tanvi Gupta' (1)
+  'varun jain': 'Varun Jain' (1)
+  'varun saxena': 'Varun Saxena' (1)
+  'vikram saxena': 'Vikram Saxena' (1)
+
+CHECK: normalized text variants in Email
+  'alt.nikhil.chopra70@example.com': 'alt.nikhil.chopra70@example.com' (1)
+  'amit.agarwal3@mailtest.example.org': 'amit.agarwal3@mailtest.example.org' (1)
+  'amit.reddy9@mailtest.example.org': 'amit.reddy9@mailtest.example.org' (1)
+  'arjun.bhatia14@example.com': 'arjun.bhatia14@example.com' (1)
+  'arjun.mehta9@example.in': 'arjun.mehta9@example.in' (1)
+  'arjun.mishra70@example.com': 'arjun.mishra70@example.com' (1)
+  'deepak.mehta86@example.in': 'deepak.mehta86@example.in' (1)
+  'deepak.nair44@example.com': 'deepak.nair44@example.com' (1)
+  'deepak.singh36@mailtest.example.org': 'deepak.singh36@mailtest.example.org' (1)
+  'gaurav.mehta79@mailtest.example.org': 'gaurav.mehta79@mailtest.example.org' (1)
+  'isha.chopra95@mailtest.example.org': 'isha.chopra95@mailtest.example.org' (1)
+  'isha.kapoor54@example.com': 'isha.kapoor54@example.com' (1)
+  'isha.sharma15@example.com': 'isha.sharma15@example.com' (1)
+  'karan.bhatia32@mailtest.example.org': 'karan.bhatia32@mailtest.example.org' (1)
+  'kavya.mehta7@example.com': 'kavya.mehta7@example.com' (1)
+  'manish.reddy73@example.com': 'manish.reddy73@example.com' (1)
+  'meera.bhatia52@mailtest.example.org': 'meera.bhatia52@mailtest.example.org' (1)
+  'neha.bhatia60@mailtest.example.org': 'neha.bhatia60@mailtest.example.org' (1)
+  'nikhil.chopra70@example.com': 'nikhil.chopra70@example.com' (1)
+  'nikhil.malhotra41@example.in': 'nikhil.malhotra41@example.in' (1)
+  'nikhil.mehta5@example.com': 'nikhil.mehta5@example.com' (1)
+  'pooja.gupta57@mailtest.example.org': 'pooja.gupta57@mailtest.example.org' (1)
+  'priya.nair70@example.com': 'priya.nair70@example.com' (1)
+  'priya.saxena61@example.com': 'priya.saxena61@example.com' (1)
+  'priya.singh61@mailtest.example.org': 'priya.singh61@mailtest.example.org' (1)
+  'rahul.chopra70@example.com': 'rahul.chopra70@example.com' (1)
+  'rahul.jain34@example.in': 'rahul.jain34@example.in' (1)
+  'rahul.malhotra69@mailtest.example.org': 'rahul.malhotra69@mailtest.example.org' (1)
+  'ritu.sharma23@mailtest.example.org': 'ritu.sharma23@mailtest.example.org' (1)
+  'rohit.mishra70@mailtest.example.org': 'rohit.mishra70@mailtest.example.org' (1)
+  'rohit.nair32@mailtest.example.org': 'rohit.nair32@mailtest.example.org' (1)
+  'rohit.verma13@mailtest.example.org': 'rohit.verma13@mailtest.example.org' (2)
+  'sahil.malhotra1@example.in': 'sahil.malhotra1@example.in' (1)
+  'shreya.gupta85@example.com': 'shreya.gupta85@example.com' (1)
+  'sneha.chopra99@example.in': 'sneha.chopra99@example.in' (1)
+  'sneha.mishra14@mailtest.example.org': 'sneha.mishra14@mailtest.example.org' (1)
+  'tanvi.agarwal97@example.in': 'tanvi.agarwal97@example.in' (1)
+  'tanvi.gupta31@example.com': 'tanvi.gupta31@example.com' (1)
+  'varun.jain29@example.com': 'varun.jain29@example.com' (1)
+  'varun.saxena21@example.in': 'varun.saxena21@example.in' (1)
+  'vikram.saxena60@example.com': 'vikram.saxena60@example.com' (1)
+
+CHECK: normalized text variants in City
+  'bangalore': 'Bangalore' (2), 'bangalore' (2)
+  'bengaluru': 'Bengaluru' (3)
+  'delhi': 'Delhi' (4)
+  'delhi ncr': 'Delhi NCR' (2)
+  'gurgaon': 'GURGAON' (3)
+  'gurugram': 'gurugram ' (2), 'Gurugram' (1)
+  'new delhi': 'new delhi' (3), 'New Delhi' (1)
+  'noida': 'Noida' (2), 'NOIDA' (6), 'Noida ' (3)
+  'pune': 'pune' (3), 'PUNE' (3), 'Pune' (2)
+
+CHECK: within-file duplicate candidates
+  By normalized email:
+    'rohit.verma13@mailtest.example.org': rows 25, 31
+      {Full Name='R. Verma', Email='rohit.verma13@mailtest.example.org', Phone='9000000294', City='Bangalore', Experience (Years)='2.4', Current CTC='6.1', Applied Date='08/13/2026', Skills='Python, React, MongoDB'}
+      {Full Name='Rohit Verma', Email='rohit.verma13@mailtest.example.org', Phone='9000000294', City='Bangalore', Experience (Years)='2.4', Current CTC='6.1', Applied Date='08/13/2026', Skills='Python, React, MongoDB'}
+  By last 10 phone digits:
+    '9000000294': rows 25, 31
+      {Full Name='R. Verma', Email='rohit.verma13@mailtest.example.org', Phone='9000000294', City='Bangalore', Experience (Years)='2.4', Current CTC='6.1', Applied Date='08/13/2026', Skills='Python, React, MongoDB'}
+      {Full Name='Rohit Verma', Email='rohit.verma13@mailtest.example.org', Phone='9000000294', City='Bangalore', Experience (Years)='2.4', Current CTC='6.1', Applied Date='08/13/2026', Skills='Python, React, MongoDB'}
+    '9000000103': rows 27, 37
+      {Full Name='Nikhil Chopra', Email='alt.nikhil.chopra70@example.com', Phone='09000000103', City='NOIDA', Experience (Years)='0.8', Current CTC='7.8', Applied Date='07/03/2026', Skills='Pandas, SQL, n8n'}
+      {Full Name='Nikhil Chopra', Email='nikhil.chopra70@example.com', Phone='09000000103', City='NOIDA', Experience (Years)='0.8', Current CTC='7.8', Applied Date='07/03/2026', Skills='Pandas, SQL, n8n'}
+  By case-folded name:
+    'nikhil chopra': rows 27, 37
+      {Full Name='Nikhil Chopra', Email='alt.nikhil.chopra70@example.com', Phone='09000000103', City='NOIDA', Experience (Years)='0.8', Current CTC='7.8', Applied Date='07/03/2026', Skills='Pandas, SQL, n8n'}
+      {Full Name='Nikhil Chopra', Email='nikhil.chopra70@example.com', Phone='09000000103', City='NOIDA', Experience (Years)='0.8', Current CTC='7.8', Applied Date='07/03/2026', Skills='Pandas, SQL, n8n'}
+
+==============================================================================
+FILE: source2_gig_workers.csv
+==============================================================================
+Rows read by pandas: 32
+Column names: ['email_id', 'worker_name', 'rate', 'location', 'status', 'skill_tags']
+
+Per-column value profile:
+  email_id: empty/whitespace-only=1; distinct=32
+    top 10: 'varun.jain29@example.com' (1), 'tanvi.agarwal97@example.in' (1), 'karan.bhatia32@mailtest.example.org' (1), 'arjun.mishra70@example.com' (1), 'isha.kapoor54@example.com' (1), 'ISHA.CHOPRA95@MAILTEST.EXAMPLE.ORG' (1), 'meera.bhatia52@mailtest.example.org' (1), 'vikram.saxena60@example.com' (1), 'rahul.chopra70@example.com' (1), 'tanvi.gupta31@example.com' (1)
+  worker_name: empty/whitespace-only=1; distinct=31
+    top 10: 'Deepak Nair' (2), 'Varun Jain' (1), 'Tanvi Agarwal' (1), 'Karan Bhatia' (1), 'Arjun Mishra' (1), 'Isha Kapoor' (1), 'Isha Chopra' (1), 'Meera Bhatia' (1), 'Vikram Saxena' (1), 'Rahul Chopra' (1)
+  rate: empty/whitespace-only=1; distinct=31
+    top 10: '73k/month' (2), '1415/hr' (1), '1231/hr' (1), '403/hr' (1), '440/hr' (1), '15k/month' (1), '1406/hr' (1), '330/hr' (1), '843/hr' (1), '72k/month' (1)
+  location: empty/whitespace-only=1; distinct=15
+    top 10: 'Noida' (5), 'Pune' (3), 'gurugram ' (3), 'pune' (3), 'PUNE' (2), 'Noida ' (2), 'Delhi' (2), 'New Delhi' (2), 'bangalore' (2), 'Bengaluru' (2)
+  status: empty/whitespace-only=1; distinct=7
+    top 10: 'Active' (8), 'ACTIVE' (8), 'Inactive' (6), 'active' (5), 'paused' (3), <EMPTY> (1), 'Pune' (1)
+  skill_tags: empty/whitespace-only=1; distinct=32
+    top 10: 'n8n, web scraping, fastapi, mysql, pandas, mongodb' (1), 'mongodb, rest apis, fastapi, web scraping' (1), 'sql, mongodb, selenium, zapier, web scraping, javascript' (1), 'react, docker, javascript' (1), 'fastapi, python, javascript, selenium, react, mysql' (1), 'react, javascript, mysql' (1), 'langchain, docker, mysql, python, sql, react' (1), 'selenium, web scraping, react, docker, sql, fastapi' (1), 'zapier, docker, python' (1), 'n8n, langchain, rest apis, mongodb, sql' (1)
+
+CHECK: malformed field counts and likely wrong-column values
+  Row 20, column email_id: contains a comma-separated value outside a skill column: 'react, javascript, mysql'
+  Row 20, column worker_name: contains @ outside an email column: 'ISHA.CHOPRA95@MAILTEST.EXAMPLE.ORG'
+
+CHECK: repeated header rows
+  None found.
+
+CHECK: completely empty rows
+  row 12
+
+CHECK: numeric range and units in rate
+  min=15; max=1483; numeric values=30/31
+  FLAG: mixed rate units (/hr=16, monthly=14).
+
+CHECK: normalized text variants in email_id
+  'anjali.agarwal53@mailtest.example.org': 'anjali.agarwal53@mailtest.example.org' (1)
+  'arjun.mehta77@mailtest.example.org': 'arjun.mehta77@mailtest.example.org' (1)
+  'arjun.mishra70@example.com': 'arjun.mishra70@example.com' (1)
+  'deepak.nair44@example.com': 'DEEPAK.NAIR44@EXAMPLE.COM' (1)
+  'deepak.nair57@example.in': 'DEEPAK.NAIR57@EXAMPLE.IN' (1)
+  'divya.chopra59@example.in': 'divya.chopra59@example.in' (1)
+  'gaurav.mehta79@mailtest.example.org': 'gaurav.mehta79@mailtest.example.org' (1)
+  'isha.chopra95@mailtest.example.org': 'ISHA.CHOPRA95@MAILTEST.EXAMPLE.ORG' (1)
+  'isha.kapoor54@example.com': 'isha.kapoor54@example.com' (1)
+  'karan.bhatia32@mailtest.example.org': 'karan.bhatia32@mailtest.example.org' (1)
+  'karan.chopra76@mailtest.example.org': 'KARAN.CHOPRA76@MAILTEST.EXAMPLE.ORG' (1)
+  'kavya.verma74@mailtest.example.org': 'KAVYA.VERMA74@MAILTEST.EXAMPLE.ORG' (1)
+  'manish.bhatia3@example.com': 'manish.bhatia3@example.com' (1)
+  'meera.bhatia52@mailtest.example.org': 'meera.bhatia52@mailtest.example.org' (1)
+  'neha.bhatia60@mailtest.example.org': 'NEHA.BHATIA60@MAILTEST.EXAMPLE.ORG' (1)
+  'nikhil.nair26@example.in': 'nikhil.nair26@example.in' (1)
+  'pooja.kapoor62@example.in': 'pooja.kapoor62@example.in' (1)
+  'pooja.reddy96@mailtest.example.org': 'pooja.reddy96@mailtest.example.org' (1)
+  'rahul.chopra70@example.com': 'rahul.chopra70@example.com' (1)
+  'react, javascript, mysql': 'react, javascript, mysql' (1)
+  'sneha.chopra99@example.in': 'sneha.chopra99@example.in' (1)
+  'tanvi.agarwal97@example.in': 'tanvi.agarwal97@example.in' (1)
+  'tanvi.gupta31@example.com': 'tanvi.gupta31@example.com' (1)
+  'tanvi.kapoor38@example.com': 'tanvi.kapoor38@example.com' (1)
+  'tanvi.reddy80@example.com': 'TANVI.REDDY80@EXAMPLE.COM' (1)
+  'tanvi.sharma56@mailtest.example.org': 'TANVI.SHARMA56@MAILTEST.EXAMPLE.ORG' (1)
+  'varun.jain29@example.com': 'varun.jain29@example.com' (1)
+  'varun.saxena21@example.in': 'VARUN.SAXENA21@EXAMPLE.IN' (1)
+  'varun.singh81@example.com': 'varun.singh81@example.com' (1)
+  'vikram.mehta6@example.com': 'vikram.mehta6@example.com' (1)
+  'vikram.saxena60@example.com': 'vikram.saxena60@example.com' (1)
+
+CHECK: normalized text variants in worker_name
+  'anjali agarwal': 'Anjali Agarwal' (1)
+  'arjun mehta': 'Arjun Mehta' (1)
+  'arjun mishra': 'Arjun Mishra' (1)
+  'deepak nair': 'Deepak Nair' (2)
+  'divya chopra': 'Divya Chopra' (1)
+  'gaurav mehta': 'Gaurav Mehta' (1)
+  'isha chopra': 'Isha Chopra' (1)
+  'isha kapoor': 'Isha Kapoor' (1)
+  'isha.chopra95@mailtest.example.org': 'ISHA.CHOPRA95@MAILTEST.EXAMPLE.ORG' (1)
+  'karan bhatia': 'Karan Bhatia' (1)
+  'karan chopra': 'Karan Chopra' (1)
+  'kavya verma': 'Kavya Verma' (1)
+  'manish bhatia': 'Manish Bhatia' (1)
+  'meera bhatia': 'Meera Bhatia' (1)
+  'neha bhatia': 'Neha Bhatia' (1)
+  'nikhil nair': 'Nikhil Nair' (1)
+  'pooja kapoor': 'Pooja Kapoor' (1)
+  'pooja reddy': 'Pooja Reddy' (1)
+  'rahul chopra': 'Rahul Chopra' (1)
+  'sneha chopra': 'Sneha Chopra' (1)
+  'tanvi agarwal': 'Tanvi Agarwal' (1)
+  'tanvi gupta': 'Tanvi Gupta' (1)
+  'tanvi kapoor': 'Tanvi Kapoor' (1)
+  'tanvi reddy': 'Tanvi Reddy' (1)
+  'tanvi sharma': 'Tanvi Sharma' (1)
+  'varun jain': 'Varun Jain' (1)
+  'varun saxena': 'Varun Saxena' (1)
+  'varun singh': 'Varun Singh' (1)
+  'vikram mehta': 'Vikram Mehta' (1)
+  'vikram saxena': 'Vikram Saxena' (1)
+
+CHECK: normalized text variants in location
+  '1406/hr': '1406/hr' (1)
+  'bangalore': 'bangalore' (2)
+  'bengaluru': 'Bengaluru' (2)
+  'delhi': 'Delhi' (2)
+  'gurgaon': 'Gurgaon' (1)
+  'gurugram': 'gurugram ' (3)
+  'new delhi': 'New Delhi' (2), 'new delhi' (1)
+  'noida': 'Noida ' (2), 'Noida' (5), 'NOIDA' (2)
+  'pune': 'Pune' (3), 'PUNE' (2), 'pune' (3)
+
+CHECK: normalized text variants in status
+  'active': 'Active' (8), 'active' (5), 'ACTIVE' (8)
+  'inactive': 'Inactive' (6)
+  'paused': 'paused' (3)
+  'pune': 'Pune' (1)
+
+CHECK: within-file duplicate candidates
+  By normalized email:
+    None found.
+  By last 10 phone digits:
+    None found.
+  By case-folded name:
+    'deepak nair': rows 15, 32
+      {email_id='DEEPAK.NAIR44@EXAMPLE.COM', worker_name='Deepak Nair', rate='465/hr', location='Bengaluru', status='paused', skill_tags='react, n8n, mongodb, pandas'}
+      {email_id='DEEPAK.NAIR57@EXAMPLE.IN', worker_name='Deepak Nair', rate='1462/hr', location='New Delhi', status='Active', skill_tags='javascript, react, docker, web scraping, mysql, sql'}
+
+==============================================================================
+FILE: source3_cbnexus_contacts.csv
+==============================================================================
+Rows read by pandas: 31
+Column names: ['Name', 'Phone Number', 'City', 'Verified', 'Projects Completed']
+
+Per-column value profile:
+  Name: empty/whitespace-only=0; distinct=30
+    top 10: 'Arjun Mehta' (2), 'Rohit Nair' (1), 'RITU SHARMA' (1), 'Priya Saxena' (1), 'Nikhil Mehta' (1), 'RAHUL MALHOTRA' (1), 'Deepak Mehta' (1), 'SAHIL MALHOTRA' (1), 'Shreya Gupta' (1), 'Priya Singh' (1)
+  Phone Number: empty/whitespace-only=0; distinct=31
+    top 10: '9000000268' (1), '9000000146' (1), '919000000231' (1), '+91-9000000131' (1), '+91-9000000104' (1), '919000000260' (1), '9000000116' (1), '9000000143' (1), '+91-9000000227' (1), '9000000287' (1)
+  City: empty/whitespace-only=0; distinct=15
+    top 10: 'Noida' (4), 'pune' (4), 'Noida ' (3), 'NOIDA' (3), 'Bengaluru' (3), 'Gurgaon' (2), 'New Delhi' (2), 'Pune' (2), 'PUNE' (2), 'Delhi NCR' (1)
+  Verified: empty/whitespace-only=0; distinct=6
+    top 10: 'No' (9), 'N' (7), 'yes' (6), 'Y' (5), 'Yes' (3), 'Verified' (1)
+  Projects Completed: empty/whitespace-only=0; distinct=16
+    top 10: '10' (5), '14' (4), '2' (3), '13' (2), '15' (2), '4' (2), '3' (2), '1' (2), '5' (2), '12' (1)
+
+CHECK: malformed field counts and likely wrong-column values
+  None found.
+
+CHECK: repeated header rows
+  row 16
+
+CHECK: completely empty rows
+  None found.
+
+CHECK: phone shapes in Phone Number
+  no recognized prefix; without hyphens; digit length 10: 13; example '9000000268'
+  leading 91; without hyphens; digit length 12: 11; example '919000000231'
+  leading +91; with hyphens; digit length 12: 6; example '+91-9000000131'
+
+CHECK: numeric range and units in Projects Completed
+  min=0; max=15; numeric values=30/31
+
+CHECK: normalized text variants in Name
+  'arjun mehta': 'Arjun Mehta' (2)
+  'arjun mishra': 'Arjun Mishra' (1)
+  'deepak mehta': 'Deepak Mehta' (1)
+  'deepak nair': 'DEEPAK NAIR' (1)
+  'divya chopra': 'DIVYA CHOPRA' (1)
+  'gaurav mehta': 'Gaurav Mehta' (1)
+  'isha chopra': 'Isha Chopra' (1)
+  'isha kapoor': 'Isha Kapoor' (1)
+  'karan bhatia': 'KARAN BHATIA' (1)
+  'karan chopra': 'Karan Chopra' (1)
+  'manish bhatia': 'MANISH BHATIA' (1)
+  'meera bhatia': 'MEERA BHATIA' (1)
+  'name': 'Name' (1)
+  'neha bhatia': 'Neha Bhatia' (1)
+  'nikhil mehta': 'Nikhil Mehta' (1)
+  'priya saxena': 'Priya Saxena' (1)
+  'priya singh': 'Priya Singh' (1)
+  'rahul chopra': 'Rahul Chopra' (1)
+  'rahul malhotra': 'RAHUL MALHOTRA' (1)
+  'ritu sharma': 'RITU SHARMA' (1)
+  'rohit nair': 'Rohit Nair' (1)
+  'sahil malhotra': 'SAHIL MALHOTRA' (1)
+  'shreya gupta': 'Shreya Gupta' (1)
+  'sneha chopra': 'Sneha Chopra' (1)
+  'tanvi agarwal': 'Tanvi Agarwal' (1)
+  'tanvi gupta': 'Tanvi Gupta' (1)
+  'varun jain': 'Varun Jain' (1)
+  'varun saxena': 'VARUN SAXENA' (1)
+  'vikram mehta': 'Vikram Mehta' (1)
+  'vikram saxena': 'Vikram Saxena' (1)
+
+CHECK: normalized text variants in City
+  'bengaluru': 'Bengaluru' (3)
+  'city': 'City' (1)
+  'delhi': 'Delhi' (1)
+  'delhi ncr': 'Delhi NCR' (1)
+  'gurgaon': 'Gurgaon' (2), 'GURGAON' (1)
+  'gurugram': 'gurugram ' (1)
+  'new delhi': 'New Delhi' (2), 'new delhi' (1)
+  'noida': 'Noida ' (3), 'Noida' (4), 'NOIDA' (3)
+  'pune': 'pune' (4), 'Pune' (2), 'PUNE' (2)
+
+CHECK: within-file duplicate candidates
+  By normalized email:
+    None found.
+  By last 10 phone digits:
+    None found.
+  By case-folded name:
+    'arjun mehta': rows 5, 28
+      {Name='Arjun Mehta', Phone Number='+91-9000000131', City='Noida', Verified='No', Projects Completed='9'}
+      {Name='Arjun Mehta', Phone Number='9000000272', City='Noida', Verified='Yes', Projects Completed='14'}
+
+==============================================================================
+CROSS-FILE JOIN KEY AVAILABILITY
+==============================================================================
+source1_naukri_applicants.csv: usable email rows=42; usable phone rows=42
+source2_gig_workers.csv: usable email rows=30; usable phone rows=0
+source3_cbnexus_contacts.csv: usable email rows=0; usable phone rows=30
+
+CHECK: cross-file names with conflicting emails or phones
+  'arjun mehta':
+    Conflicting emails: 'arjun.mehta77@mailtest.example.org', 'arjun.mehta9@example.in'
+    Conflicting phones: '9000000131', '9000000272'
+    source1_naukri_applicants.csv: Full Name='Arjun Mehta', Email='arjun.mehta9@example.in', Phone='09000000131', City='NOIDA', Experience (Years)='4.0', Current CTC='1181149', Applied Date='21-07-2026', Skills='SQL, Selenium, n8n'
+    source2_gig_workers.csv: email_id='arjun.mehta77@mailtest.example.org', worker_name='Arjun Mehta', rate='42k/month', location='Noida', status='Inactive', skill_tags='fastapi, pandas, web scraping, zapier, docker, mysql'
+    source3_cbnexus_contacts.csv: Name='Arjun Mehta', Phone Number='+91-9000000131', City='Noida', Verified='No', Projects Completed='9'
+    source3_cbnexus_contacts.csv: Name='Arjun Mehta', Phone Number='9000000272', City='Noida', Verified='Yes', Projects Completed='14'
+  'deepak nair':
+    Conflicting emails: 'deepak.nair44@example.com', 'deepak.nair57@example.in'
+    source1_naukri_applicants.csv: Full Name='Deepak Nair', Email='deepak.nair44@example.com', Phone='9000000296', City='bangalore', Experience (Years)='5.0', Current CTC='1160787', Applied Date='15 Jul 2026', Skills='React, n8n, MongoDB, Pandas'
+    source2_gig_workers.csv: email_id='DEEPAK.NAIR44@EXAMPLE.COM', worker_name='Deepak Nair', rate='465/hr', location='Bengaluru', status='paused', skill_tags='react, n8n, mongodb, pandas'
+    source2_gig_workers.csv: email_id='DEEPAK.NAIR57@EXAMPLE.IN', worker_name='Deepak Nair', rate='1462/hr', location='New Delhi', status='Active', skill_tags='javascript, react, docker, web scraping, mysql, sql'
+    source3_cbnexus_contacts.csv: Name='DEEPAK NAIR', Phone Number='919000000296', City='Bengaluru', Verified='Yes', Projects Completed='2'
+  'nikhil chopra':
+    Conflicting emails: 'alt.nikhil.chopra70@example.com', 'nikhil.chopra70@example.com'
+    source1_naukri_applicants.csv: Full Name='Nikhil Chopra', Email='alt.nikhil.chopra70@example.com', Phone='09000000103', City='NOIDA', Experience (Years)='0.8', Current CTC='7.8', Applied Date='07/03/2026', Skills='Pandas, SQL, n8n'
+    source1_naukri_applicants.csv: Full Name='Nikhil Chopra', Email='nikhil.chopra70@example.com', Phone='09000000103', City='NOIDA', Experience (Years)='0.8', Current CTC='7.8', Applied Date='07/03/2026', Skills='Pandas, SQL, n8n'

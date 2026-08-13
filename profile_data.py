@@ -239,7 +239,7 @@ def report_file(path: Path, lines: list[str]) -> tuple[pd.DataFrame, list[str], 
 
     # Show case-folded/trimmed text groups so raw spelling variants remain visible.
     for column in frame.columns:
-        if column_kind(column) != "text":
+        if column_kind(column) not in {"text", "email"}:
             continue
         # Report raw variants that collapse to the same case-folded, whitespace-trimmed value.
         variants: defaultdict[str, Counter[str]] = defaultdict(Counter)
